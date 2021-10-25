@@ -22,7 +22,7 @@ def one_vs_all(X, y, num_labels, learning_rate):
         fmin = minimize(fun=cost, x0=theta, args=(X, y_i, learning_rate), method='TNC', jac=gradientDescent)
         all_theta[i - 1, :] = fmin.x
 
-        return all_theta
+    return all_theta
 
 
 def predict_all(X, all_theta):
