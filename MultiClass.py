@@ -25,6 +25,24 @@ def one_vs_all(X, y, num_labels, learning_rate):
         return all_theta
 
 
+def predict_all(X, all_theta):
+    rows = X.shape[0]
+    params = X.shape[1]
+    num_labels = all_theta.shape[0]
+
+    X = np.insert(X, 0, values=np.ones(rows), axis=1)
+
+    X = np.matrix(X)
+    all_theta = np.matrix(all_theta)
+
+    h = sigmoid(X * all_theta.T)
+
+    h_argmax = np.argmax(h, axis=1)
+
+    h_argmax = h_argmax + 1
+    return h_argmax
+
+
 if __name__ == '__main__':
     data = loadmat("ex3data1.mat")
     print(data)
