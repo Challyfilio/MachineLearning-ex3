@@ -34,11 +34,11 @@ def predict_all(X, all_theta):
 
     X = np.matrix(X)
     all_theta = np.matrix(all_theta)
-
+    # 计算样本属于每一类的概率
     h = sigmoid(X * all_theta.T)
-
+    # 每个样本中预测概率最大值
     h_argmax = np.argmax(h, axis=1)
-
+    # 索引+1
     h_argmax = h_argmax + 1
     return h_argmax
 
@@ -65,3 +65,8 @@ if __name__ == '__main__':
 
     all_theta = one_vs_all(data['X'], data['y'], 10, 1)
     print(all_theta)
+
+    y_pred = predict_all(data['X'],all_theta)
+    correct = [1 if a == b else 0 for (a,b) in zip(y_pred,data['y'])]
+    accuracy = (sum(map(int,correct)))/float(len(correct))
+    print('accuracy='+str(accuracy))
