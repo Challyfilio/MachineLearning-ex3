@@ -1,7 +1,7 @@
 import matplotlib
 import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+from sklearn.metrics import classification_report
 from scipy.io import loadmat
 from scipy.optimize import minimize
 
@@ -94,25 +94,25 @@ if __name__ == '__main__':
             plt.yticks(np.array([]))
     plt.show()
 
-    # rows = data['X'].shape[0]
-    # params = data['X'].shape[1]
-    # all_theta = np.zeros((10, params + 1))
-    # X = np.insert(data['X'], 0, values=np.ones(rows), axis=1)
-    #
-    # theta = np.zeros(params + 1)
-    #
-    # y_0 = np.array([1 if label == 0 else 0 for label in data['y']])
-    # y_0 = np.reshape(y_0, (rows, 1))
-    #
-    # print(X.shape, y_0.shape, theta.shape, all_theta.shape)
-    # # 标签
-    # print(np.unique(data['y']))
-    #
-    # all_theta = one_vs_all(data['X'], data['y'], 10, 1)
-    # # print(all_theta)
-    #
-    # y_pred = predict_all(data['X'], all_theta)
-    # print(y_pred)
-    # correct = [1 if a == b else 0 for (a, b) in zip(y_pred, data['y'])]
-    # accuracy = (sum(map(int, correct))) / float(len(correct))
-    # print('accuracy=' + str(accuracy))
+    rows = data['X'].shape[0]
+    params = data['X'].shape[1]
+    all_theta = np.zeros((10, params + 1))
+    X = np.insert(data['X'], 0, values=np.ones(rows), axis=1)
+
+    theta = np.zeros(params + 1)
+
+    y_0 = np.array([1 if label == 0 else 0 for label in data['y']])
+    y_0 = np.reshape(y_0, (rows, 1))
+
+    print(X.shape, y_0.shape, theta.shape, all_theta.shape)
+    # 标签
+    print(np.unique(data['y']))
+
+    all_theta = one_vs_all(data['X'], data['y'], 10, 1)
+    # print(all_theta)
+
+    y_pred = predict_all(data['X'], all_theta)
+    correct = [1 if a == b else 0 for (a, b) in zip(y_pred, data['y'])]
+    accuracy = (sum(map(int, correct))) / float(len(correct))
+    print('accuracy=' + str(accuracy))
+    print(classification_report(data['y'],y_pred))
