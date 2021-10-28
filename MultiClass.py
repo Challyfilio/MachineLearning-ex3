@@ -15,7 +15,8 @@ def cost(theta, X, y, learningRate):  # learninRate正则化参数（lambda）
     X = np.matrix(X)
     y = np.matrix(y)
 
-    cross_cost = np.multiply(-y, np.log(sigmoid(X * theta.T))) - np.multiply((1 - y), np.log(1 - sigmoid(X * theta.T)))
+    cross_cost = np.multiply(-y, np.log(sigmoid(X * theta.T))) \
+                 - np.multiply((1 - y), np.log(1 - sigmoid(X * theta.T)))
     # 正则化部分
     reg = (learningRate / (2 * len(X))) * np.sum(np.power(theta[1:], 2))
     whole_cost = np.sum(cross_cost) / len(X) + reg
