@@ -35,7 +35,7 @@ def gradientDescent(theta, X, y, learningRate):
     grad[0, 0] = np.sum(np.multiply(error, X[:, 0])) / len(X)
     return np.array(grad).ravel()
 
-
+#一对多分类器
 def one_vs_all(X, y, num_labels, learning_rate):
     rows = X.shape[0]
     params = X.shape[1]
