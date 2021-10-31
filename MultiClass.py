@@ -28,15 +28,17 @@ def gradientDescent(theta, X, y, learningRate):
     X = np.matrix(X)
     y = np.matrix(y)
 
-    parameters = int(theta.ravel().shape[1])  # theta的数量
     # 计算预测误差
     error = sigmoid(X * theta.T) - y
     # 计算梯度
     grad = ((X.T * error) / len(X)).T + ((learningRate / len(X)) * theta)
+
+    # Θ0不需要正则化
     grad[0, 0] = np.sum(np.multiply(error, X[:, 0])) / len(X)
     return np.array(grad).ravel()
 
-#一对多分类器
+
+# 一对多分类器
 def one_vs_all(X, y, num_labels, learning_rate):
     rows = X.shape[0]
     params = X.shape[1]
@@ -56,10 +58,8 @@ def one_vs_all(X, y, num_labels, learning_rate):
     return all_theta
 
 
-def predict_all(X, all_theta):
+def predict(X, all_theta):
     rows = X.shape[0]
-    params = X.shape[1]
-    num_labels = all_theta.shape[0]
 
     X = np.insert(X, 0, values=np.ones(rows), axis=1)
 
@@ -67,7 +67,7 @@ def predict_all(X, all_theta):
     all_theta = np.matrix(all_theta)
     # 计算样本属于每一类的概率
     h = sigmoid(X * all_theta.T)
-    print(h)
+    # print(h)
     # 每个样本中预测概率最大值
     h_argmax = np.argmax(h, axis=1)
     # 索引+1
@@ -76,7 +76,7 @@ def predict_all(X, all_theta):
 
 
 if __name__ == '__main__':
-    #数据集
+    # 数据集
     data = loadmat("ex3data1.mat")
     print(data)
 
@@ -112,8 +112,8 @@ if __name__ == '__main__':
     all_theta = one_vs_all(data['X'], data['y'], 10, 1)
     # print(all_theta)
 
-    y_pred = predict_all(data['X'], all_theta)
+    y_pred = predict(data['X'], all_theta)
     correct = [1 if a == b else 0 for (a, b) in zip(y_pred, data['y'])]
     accuracy = (sum(map(int, correct))) / float(len(correct))
     print('accuracy=' + str(accuracy))
-    print(classification_report(data['y'],y_pred))
+    print(classification_report(data['y'], y_pred))
